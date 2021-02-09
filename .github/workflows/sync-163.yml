@@ -30,6 +30,23 @@ jobs:
           source_branch: "master"
           destination_branch: "163"
           github_token: ${{ secrets.PAT }}
+  fix-cron:
+    needs: repo-sync
+    env:
+      PAT: ${{ secrets.PAT }}      
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: 163
+    - name: '运行 【修改cron】'
+      run: |
+             sed -i 's/16/19,22/' action.yml
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Apply fix-cron changes
+        branch: 163
+        file_pattern: action.yml
       # 我自己同步到gitee使用，其他人可忽略
       - name: sync github -> gitee
         uses: wei/git-sync@v3
