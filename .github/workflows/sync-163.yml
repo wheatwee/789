@@ -41,12 +41,12 @@ jobs:
         ref: 163
     - name: '运行 【修改cron】'
       run: |
-             sed -i 's/16/19,22/' /.github/workflows/action.yml
+           sed -i 's/16/19,22/' .github/workflows/action.yml
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: Apply fix-cron changes
         branch: 163
-        file_pattern: action.yml
+        file_pattern: .github/workflows/action.yml
   
   # 我自己同步到gitee使用，其他人可忽略
     - name: git-sync
