@@ -33,7 +33,8 @@ jobs:
   fix-cron:
     needs: repo-sync
     env:
-      PAT: ${{ secrets.PAT }}      
+      PAT: ${{ secrets.PAT }} 
+      ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}     
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -48,10 +49,7 @@ jobs:
         branch: 163
         file_pattern: action.yml
    # 我自己同步到gitee使用，其他人可忽略
-   git-sync:
-    runs-on: ubuntu-latest
-    steps:
-      - name: git-sync
+    - name: git-sync
         uses: wei/git-sync@v3
         with:
           source_repo: "wheatwee/789"
