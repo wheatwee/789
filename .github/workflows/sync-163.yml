@@ -30,36 +30,35 @@ jobs:
           source_branch: "master"
           destination_branch: "163"
           github_token: ${{ secrets.PAT }}
-    
-  # 我自己同步到gitee使用，其他人可忽略
-      - name: git-sync
-        uses: wei/git-sync@v3
-        with:
-          source_repo: "wheatwee/789"
-          source_branch: "163"
-          destination_repo: "wheatwee/163"
-          destination_branch: "main"
-          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} # optional
-          source_ssh_private_key: ${{ secrets.SOURCE_SSH_PRIVATE_KEY }} # optional, will override `SSH_PRIVATE_KEY`
-          destination_ssh_private_key: ${{ secrets.DESTINATION_SSH_PRIVATE_KEY }} # optional, will override `SSH_PRIVATE_KEY`
-  
   fix-cron:
     needs: repo-sync
     env:
-      PAT: ${{ secrets.GH_PAT }}      
+      PAT: ${{ secrets.PAT }}      
     runs-on: ubuntu-latest
-    steps: 
-      - name: Checkout Repository 
-        uses: actions/checkout@master
-      - name: Run GitHub File Sync
-        uses: BetaHuhn/repo-file-sync-action@v1
-        with: 
-           GH_PAT: ${{ secrets.GH_PAT }}
-           group:
-              repos: |
-                wheatwee/789
-                wheatwee/163
-              files:
-              - source: action.yml
-                dest: .github/workflows/action.yml
-            
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: 163
+      - name: Find and Replace
+        uses: jacobtomlinson/gha-find-replace@master
+        with:
+          find: "16"
+          replace: "19,22"
+          include: "action.yml"
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Apply fix-cron changes
+          branch: 163
+          file_pattern: .github/workflows/action.yml
+  
+    # 我自己同步到gitee使用，其他人可忽略
+      - name: git-sync
+        uses: wei/git-sync@v3
+        with:
+            source_repo: "wheatwee/789"
+            source_branch: "163"
+            destination_repo: "wheatwee/163"
+            destination_branch: "main"
+            ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} # optional
+            source_ssh_private_key: ${{ secrets.SOURCE_SSH_PRIVATE_KEY }} # optional, will override `SSH_PRIVATE_KEY`
+            destination_ssh_private_key: ${{ secrets.DESTINATION_SSH_PRIVATE_KEY }} # optional, will override `SSH_PRIVATE_KEY`
