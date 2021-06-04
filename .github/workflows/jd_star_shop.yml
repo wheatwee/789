@@ -1,16 +1,16 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: jd_starStore
+name: jd_star_shop
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '19 1 * * *'
+    - cron: '1 13,17  * * *'
   watch:
     types: [started]
   repository_dispatch:
-    types: jd_starStore
+    types: jd_star_shop
 jobs:
   build:
 
@@ -28,10 +28,10 @@ jobs:
         run: |
           cd ~/scripts
           npm install
-      - name: '运行 【stars~~🎁】'
+      - name: '运行 【明星小店👮‍】'
         run: |
           cd ~/scripts
-          node jd_starStore.js
+          node jd_star_shop.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
