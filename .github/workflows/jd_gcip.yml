@@ -28,7 +28,7 @@ jobs:
         run: |
           cd ~/scripts
           npm install
-      - name: '运行 【极速版翻翻乐~】'
+      - name: '运行 【柠檬特物国创IP】'
         run: |
           cd ~/scripts
           node jd_gcip.js
