@@ -1,7 +1,7 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: monk_adolf_pk
+name: y_pk
 
 on:
   workflow_dispatch:
@@ -10,7 +10,7 @@ on:
   watch:
     types: [started]
   repository_dispatch:
-    types: monk_adolf_pk
+    types: y_pk
 jobs:
   build:
 
@@ -28,10 +28,10 @@ jobs:
         run: |
           cd ~/scripts
           npm install
-      - name: '运行 【京享值PK🤼‍♂️🤼‍♀️】'
+      - name: '运行 【京享值PK~】'
         run: |
           cd ~/scripts
-          node monk_adolf_pk.js
+          node y_pk.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
